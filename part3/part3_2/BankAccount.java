@@ -13,6 +13,8 @@ public class BankAccount {
         this.owner = owner;
         this.pin = pin;
         this.balance = initialBalance;
+        this.failedAttempts = 0;
+        this.blocked = false;
     }
 
     public boolean validatePin(String enteredPin) {
@@ -22,6 +24,10 @@ public class BankAccount {
     public boolean deposit(double amount) {
         // TODO: пополнение разрешено только при amount > 0.
         // ▼ ВАШ КОД ЗДЕСЬ ▼
+        if (amount > 0) {
+            balance += amount;
+            return true;
+        }
         return false;
         // ▲ КОНЕЦ ВАШЕГО КОДА ▲
     }
@@ -33,20 +39,53 @@ public class BankAccount {
         // 3) при 3 неверных попытках blocked=true;
         // 4) верный PIN сбрасывает failedAttempts и проверяет amount.
         // ▼ ВАШ КОД ЗДЕСЬ ▼
-        return false;
+        if (blocked) {
+            System.out.println("Счёт заблокирован. Операция невозможна.");
+            return false;
+        }
+
+        if (!validatePin(enteredPin)) {
+            failedAttempts++;
+            System.out.println("Неверный PIN. Попытка " + failedAttempts + " из 3");
+
+            if (failedAttempts >= 3) {
+                blocked = true;
+                System.out.println("Счёт заблокирован за 3 неверные попытки ввода PIN");
+            }
+            return false;
+        }
+
+        failedAttempts = 0;
+
+        if (amount <= 0) {
+            System.out.println("Сумма снятия должна быть положительной");
+            return false;
+        }
+
+        if (amount > balance) {
+            System.out.println("Недостаточно средств. Доступно: " + balance);
+            return false;
+        }
+
+        balance -= amount;
+        System.out.println("Снято " + amount + "₽. Остаток: " + balance + "₽");
+        return true;
         // ▲ КОНЕЦ ВАШЕГО КОДА ▲
     }
 
     public String getMaskedBalance() {
         // TODO: скрывайте суммы свыше 100000.
         // ▼ ВАШ КОД ЗДЕСЬ ▼
-        return "TODO";
+        if (balance > 100000) {
+            return "*****";
+        }
+        return String.format("%.2f", balance);
         // ▲ КОНЕЦ ВАШЕГО КОДА ▲
     }
 
     @Override
     public String toString() {
         return String.format("BankAccount{%s, owner=%s, balance=%s}%s",
-            accountNumber, owner, getMaskedBalance(), blocked ? " [ЗАБЛОКИРОВАН]" : "");
+                accountNumber, owner, getMaskedBalance(), blocked ? " [ЗАБЛОКИРОВАН]" : "");
     }
 }

@@ -24,7 +24,7 @@ public class ElectricCar extends Car implements Electric {
     public double getRangeKm() {
         // TODO: запас хода = maxRangeKm * batteryLevel.
         // ▼ ВАШ КОД ЗДЕСЬ ▼
-        return 0.0;
+        return maxRangeKm * (batteryLevel / 100.0);
         // ▲ КОНЕЦ ВАШЕГО КОДА ▲
     }
 
@@ -32,7 +32,10 @@ public class ElectricCar extends Car implements Electric {
     public void charge(double hours) {
         // TODO: +20% в час, максимум 100%.
         // ▼ ВАШ КОД ЗДЕСЬ ▼
-
+        double chargeIncrease = hours * 20.0;
+        batteryLevel = Math.min(100.0, batteryLevel + chargeIncrease);
+        System.out.println(getBrand() + " " + getModel() + " charging... Battery level: " +
+                String.format("%.1f%%", batteryLevel));
         // ▲ КОНЕЦ ВАШЕГО КОДА ▲
     }
 
