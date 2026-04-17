@@ -12,18 +12,33 @@ public class NumberClassifier {
     public static String classify(int number) {
         // TODO: верните категорию для number по условию задания.
         // ▼ ВАШ КОД ЗДЕСЬ ▼
-        return "TODO";
+        if (number < 0) {
+            return "отрицательное";
+        }
+        if (number == 0) {
+            return "ноль";
+        }
+        if (number >= 1 && number <= 9) {
+            return "однозначное";
+        }
+        if (number >= 10 && number <= 99) {
+            return "двузначное";
+        }
+        if (number >= 100 && number <= 999) {
+            return "трёхзначное";
+        }
+        return "большое";
         // ▲ КОНЕЦ ВАШЕГО КОДА ▲
     }
 
     public static void main(String[] args) {
         // ▼ ВАШ КОД ЗДЕСЬ ▼
-        System.out.println("Group: ИМЯ_ВАШЕЙ_ГРУППЫ");
-        System.out.println("Sequence number: ВАШ_ПОРЯДКОВЫЙ_НОМЕР_В_ГРУППЕ");
+        System.out.println("Group: ПИ24-2В");
+        System.out.println("Sequence number: 15");
         System.out.println("Date: " + LocalDate.now());
          // ▲ КОНЕЦ ВАШЕГО КОДА ▲
 
-        int[] samples = {-5, 0, 7, 42, 100, 1000, -999};
+        int[] samples = {-5, 0, 7, 42, 100, 1000, -999, 0, 9, 10};
         for (int n : samples) {
             System.out.println(n + " -> " + classify(n));
         }

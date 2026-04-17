@@ -6,14 +6,33 @@ public class GradeChecker {
         // TODO: реализуйте вариант через классический switch.
         // Подсказка: удобно сначала вычислить "десяток" score / 10.
         // ▼ ВАШ КОД ЗДЕСЬ ▼
-        return "TODO";
+        int tens = score / 10;
+        switch (tens) {
+            case 10:
+            case 9:
+            case 8:
+                return "отлично";
+            case 7:
+                return "хорошо";
+            case 6:
+            case 5:
+                return "удовлетворительно";
+            default:
+                return "неудовлетворительно";
+        }
         // ▲ КОНЕЦ ВАШЕГО КОДА ▲
     }
 
     public static String getGradeArrow(int score) {
         // TODO: реализуйте вариант через switch -> (Java 14+).
         // ▼ ВАШ КОД ЗДЕСЬ ▼
-        return "TODO";
+        int tens = score / 10;
+        return switch (tens) {
+            case 10, 9, 8 -> "отлично";
+            case 7 -> "хорошо";
+            case 6, 5 -> "удовлетворительно";
+            default -> "неудовлетворительно";
+        };
         // ▲ КОНЕЦ ВАШЕГО КОДА ▲
     }
 
